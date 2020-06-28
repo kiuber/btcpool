@@ -32,6 +32,8 @@ RUN mkdir -p /tmp/build && cd /tmp/build && cmake \
     -DPOOL__INSTALL_PREFIX=/work/btcpool \
     -DPOOL__WORK_WITH_STRATUM_SWITCHER=${WORK_WITH_STRATUM_SWITCHER} \
     /tmp/btcpool
+# RUN apt-get update && apt-get install tree -y
+# RUN tree /tmp/build
 RUN cd /tmp/build && make package -j${BUILD_JOBS} && mkdir -p /work/package && cp *.deb /work/package/
 
 ######### Release image #########

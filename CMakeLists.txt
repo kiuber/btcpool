@@ -58,7 +58,7 @@ endif()
 #
 # Chain Type
 #
-set(SUPPORTED_CHAIN_TYPES "BTC|BCH|BSV|UBTC|LTC|ZEC")
+set(SUPPORTED_CHAIN_TYPES "BTC|BCH|BSV|UBTC|LTC|ZEC|BTCV")
 if(NOT CHAIN_TYPE)
   message(FATAL_ERROR "Chain type not defined! (-DCHAIN_TYPE=${SUPPORTED_CHAIN_TYPES})")
 endif()
@@ -78,6 +78,11 @@ elseif(CHAIN_TYPE STREQUAL "BCH")
   set(CHAIN_NAME "Bitcoin ABC")
   set(POOL__DEB_PACKNAME_POSTFIX "${POOL__DEB_PACKNAME_POSTFIX}-bitcoincash")
   set(POOL__DEFAULT_INSTALL_PREFIX "/work/btcpool.bch")
+
+elseif(CHAIN_TYPE STREQUAL "BTCV")
+  set(CHAIN_NAME "Bitcoin Vault")
+  set(POOL__DEB_PACKNAME_POSTFIX "${POOL__DEB_PACKNAME_POSTFIX}-bitcoinvault")
+  set(POOL__DEFAULT_INSTALL_PREFIX "/work/btcpool.btcv")
 
 # BitcoinSV
 elseif(CHAIN_TYPE STREQUAL "BSV")
@@ -218,6 +223,13 @@ if(CHAIN_TYPE STREQUAL "BCH")
     "${CHAIN_SRC_ROOT}/src/crypto/libbitcoin_crypto_shani.a"
     "${CHAIN_SRC_ROOT}/src/crypto/libbitcoin_crypto_avx2.a"
     "${CHAIN_SRC_ROOT}/src/crypto/libbitcoin_crypto_sse41.a")
+
+elseif(CHAIN_TYPE STREQUAL "BTCV")
+  set(BITCOIN_LIBRARIES ${BITCOIN_LIBRARIES}
+    "${CHAIN_SRC_ROOT}/src/libbitcoin_common.a"
+    "${CHAIN_SRC_ROOT}/src/libbitcoin_consensus.a"
+    "${CHAIN_SRC_ROOT}/src/libbitcoin_util.a"
+    "${CHAIN_SRC_ROOT}/src/crypto/libbitcoin_crypto_base.a")
 
 elseif(CHAIN_TYPE STREQUAL "ZEC")
   execute_process(
