@@ -87,4 +87,4 @@ RUN mkdir -p /work/blockchain && cd /work/blockchain && wget https://github.com/
 RUN ln -s /work/blockchain /work/bitcoin
 
 # Used later by btcpool build
-ENV CHAIN_TYPE=BTCV
+ENV CHAIN_TYPE=BTCVAULT
