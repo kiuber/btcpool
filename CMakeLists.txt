@@ -73,6 +73,11 @@ if (CHAIN_TYPE STREQUAL "BTC")
     add_definitions(-DINCLUDE_BTC_KEY_IO_H)
   endif()
 
+# BTCVAULT
+if (CHAIN_TYPE STREQUAL "BTCVAULT")
+  add_definitions(-DINCLUDE_BTC_KEY_IO_H)
+  endif()
+
 # BitcoinCash
 elseif(CHAIN_TYPE STREQUAL "BCH")
   set(CHAIN_NAME "Bitcoin ABC")
