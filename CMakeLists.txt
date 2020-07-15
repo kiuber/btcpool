@@ -84,7 +84,6 @@ elseif(CHAIN_TYPE STREQUAL "BTCVAULT")
   set(CHAIN_NAME "Bitcoin Vault")
   set(POOL__DEB_PACKNAME_POSTFIX "${POOL__DEB_PACKNAME_POSTFIX}-bitcoinvault")
   set(POOL__DEFAULT_INSTALL_PREFIX "/work/btcpool.btcvault")
-  add_definitions(-DINCLUDE_BTC_KEY_IO_H)
 
 # BitcoinSV
 elseif(CHAIN_TYPE STREQUAL "BSV")
