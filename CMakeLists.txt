@@ -231,7 +231,7 @@ elseif(CHAIN_TYPE STREQUAL "BTCVAULT")
     "${CHAIN_SRC_ROOT}/src/libbitcoin_common.a"
     "${CHAIN_SRC_ROOT}/src/libbitcoin_consensus.a"
     "${CHAIN_SRC_ROOT}/src/libbitcoin_util.a"
-    "${CHAIN_SRC_ROOT}/src/crypto/libbitcoin_crypto_base.a")
+    "${CHAIN_SRC_ROOT}/src/crypto/libbitcoin_crypto.a")
 
 elseif(CHAIN_TYPE STREQUAL "ZEC")
   execute_process(
