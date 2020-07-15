@@ -73,21 +73,18 @@ if (CHAIN_TYPE STREQUAL "BTC")
     add_definitions(-DINCLUDE_BTC_KEY_IO_H)
   endif()
 
-# BTCVAULT
-if (CHAIN_TYPE STREQUAL "BTCVAULT")
-  add_definitions(-DINCLUDE_BTC_KEY_IO_H)
-  endif()
-
 # BitcoinCash
 elseif(CHAIN_TYPE STREQUAL "BCH")
   set(CHAIN_NAME "Bitcoin ABC")
   set(POOL__DEB_PACKNAME_POSTFIX "${POOL__DEB_PACKNAME_POSTFIX}-bitcoincash")
   set(POOL__DEFAULT_INSTALL_PREFIX "/work/btcpool.bch")
 
+# BTCVAULT
 elseif(CHAIN_TYPE STREQUAL "BTCVAULT")
   set(CHAIN_NAME "Bitcoin Vault")
   set(POOL__DEB_PACKNAME_POSTFIX "${POOL__DEB_PACKNAME_POSTFIX}-bitcoinvault")
   set(POOL__DEFAULT_INSTALL_PREFIX "/work/btcpool.btcvault")
+  add_definitions(-DINCLUDE_BTC_KEY_IO_H)
 
 # BitcoinSV
 elseif(CHAIN_TYPE STREQUAL "BSV")
