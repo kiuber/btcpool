@@ -5,8 +5,8 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP TABLE IF EXISTS `found_blocks`;
-CREATE TABLE `found_blocks` (
+DROP TABLE IF EXISTS `s_vpool_found_blocks`;
+CREATE TABLE `s_vpool_found_blocks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `puid` int(11) NOT NULL,
   `worker_id` bigint(20) NOT NULL,
@@ -26,8 +26,8 @@ CREATE TABLE `found_blocks` (
   UNIQUE KEY `hash`(`hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `mining_workers`;
-CREATE TABLE `mining_workers` (
+DROP TABLE IF EXISTS `s_vpool_mining_workers`;
+CREATE TABLE `s_vpool_mining_workers` (
   `worker_id` bigint(20) NOT NULL,
   `puid` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,

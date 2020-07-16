@@ -476,11 +476,11 @@ void ShareLogParserT<SHARE>::generateHoursData(
   // user
   else if (userId != 0 && workerId == 0) {
     extraValues = Strings::Format("%d,", userId);
-    table = "stats_users_hour";
+    table = "s_vpool_stats_users_hour";
   }
   // pool
   else if (userId == 0 && workerId == 0) {
-    table = "stats_pool_hour";
+    table = "s_vpool_stats_pool_hour";
   } else {
     LOG(ERROR) << "unknown stats type";
     return;
@@ -528,9 +528,9 @@ void ShareLogParserT<SHARE>::generateHoursData(
 
     if (table == "stats_workers_hour") {
       valuesWorkersHour->push_back(valuesStr);
-    } else if (table == "stats_users_hour") {
+    } else if (table == "s_vpool_stats_users_hour") {
       valuesUsersHour->push_back(valuesStr);
-    } else if (table == "stats_pool_hour") {
+    } else if (table == "s_vpool_stats_pool_hour") {
       valuesPoolHour->push_back(valuesStr);
     }
   } /* /for */
@@ -632,11 +632,11 @@ void ShareLogParserT<SHARE>::generateDailyData(
   // user
   else if (userId != 0 && workerId == 0) {
     extraValues = Strings::Format("%d,", userId);
-    table = "stats_users_day";
+    table = "s_vpool_stats_users_day";
   }
   // pool
   else if (userId == 0 && workerId == 0) {
-    table = "stats_pool_day";
+    table = "s_vpool_stats_pool_day";
   } else {
     LOG(ERROR) << "unknown stats type";
     return;
@@ -675,9 +675,9 @@ void ShareLogParserT<SHARE>::generateDailyData(
 
   if (table == "stats_workers_day") {
     valuesWorkersDay->push_back(valuesStr);
-  } else if (table == "stats_users_day") {
+  } else if (table == "s_vpool_stats_users_day") {
     valuesUsersDay->push_back(valuesStr);
-  } else if (table == "stats_pool_day") {
+  } else if (table == "s_vpool_stats_pool_day") {
     valuesPoolDay->push_back(valuesStr);
   }
 }
@@ -739,14 +739,14 @@ void ShareLogParserT<SHARE>::removeExpiredDataFromDB() {
   }
 
   //
-  // table.stats_users_hour
+  // table.s_vpool_stats_users_hour
   //
   {
     const int32_t kHourDataKeepDays_users = 24 * 30; // 30 days
     const string hourStr =
         date("%Y%m%d%H", time(nullptr) - 3600 * kHourDataKeepDays_users);
     sql = Strings::Format(
-        "DELETE FROM `stats_users_hour` WHERE `hour` < '%s'", hourStr);
+        "DELETE FROM `s_vpool_stats_users_hour` WHERE `hour` < '%s'", hourStr);
     if (poolDB_.execute(sql)) {
       LOG(INFO) << "delete expired users hour data before '" << hourStr
                 << "', count: " << poolDB_.affectedRows();
@@ -820,16 +820,16 @@ bool ShareLogParserT<SHARE>::flushToDB(bool removeExpiredData) {
   // flush hours data
   flushHourOrDailyData(
       valuesWorkersHour, "stats_workers_hour", "`worker_id`,`puid`,`hour`,");
-  flushHourOrDailyData(valuesUsersHour, "stats_users_hour", "`puid`,`hour`,");
-  flushHourOrDailyData(valuesPoolHour, "stats_pool_hour", "`hour`,");
+  flushHourOrDailyData(valuesUsersHour, "s_vpool_stats_users_hour", "`puid`,`hour`,");
+  flushHourOrDailyData(valuesPoolHour, "s_vpool_stats_pool_hour", "`hour`,");
   counter +=
       valuesWorkersHour.size() + valuesUsersHour.size() + valuesPoolHour.size();
 
   // flush daily data
   flushHourOrDailyData(
       valuesWorkersDay, "stats_workers_day", "`worker_id`,`puid`,`day`,");
-  flushHourOrDailyData(valuesUsersDay, "stats_users_day", "`puid`,`day`,");
-  flushHourOrDailyData(valuesPoolDay, "stats_pool_day", "`day`,");
+  flushHourOrDailyData(valuesUsersDay, "s_vpool_stats_users_day", "`puid`,`day`,");
+  flushHourOrDailyData(valuesPoolDay, "s_vpool_stats_pool_day", "`day`,");
   counter +=
       valuesWorkersDay.size() + valuesUsersDay.size() + valuesPoolDay.size();
 

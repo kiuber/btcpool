@@ -387,7 +387,7 @@ void BlockMakerEth::saveBlockToDB(
   const string nowStr = date("%F %T");
   string sql;
   sql = Strings::Format(
-      "INSERT INTO `found_blocks` "
+      "INSERT INTO `s_vpool_found_blocks` "
       " (`puid`, `worker_id`"
       ", `worker_full_name`, `chain`"
       ", `height`, `hash`, `hash_no_nonce`, `nonce`"

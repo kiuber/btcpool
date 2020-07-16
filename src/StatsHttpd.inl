@@ -898,8 +898,8 @@ void StatsServerT<SHARE>::_flushWorkersAndUsersToDBThread() {
   // table.`mining_workers` unique index: `puid` + `worker_id`
   //
   const string mergeSQL = R"(
-    INSERT INTO `mining_workers`
-    SELECT * FROM `mining_workers_tmp`
+    INSERT INTO `s_vpool_mining_workers`
+    SELECT * FROM `s_vpool_mining_workers_tmp`
     ON DUPLICATE KEY UPDATE
       `mining_workers`.`accept_5m` = `mining_workers_tmp`.`accept_5m`,
       `mining_workers`.`accept_15m` = `mining_workers_tmp`.`accept_15m`,

@@ -161,7 +161,7 @@ fn create_block_record(
     compact_target: &u32,
 ) {
     let stmt = format!(
-        "INSERT INTO `found_blocks` (`puid`,`worker_id`,`worker_full_name`,`height`,`hash`,`hash_no_nonce`,`nonce`,`prev_hash`,`network_diff`,`created_at`) VALUES({},{},'0x{}',{},'0x{}','0x{}','0x{:016x}','0x{}',{},'{}')",
+        "INSERT INTO `s_vpool_found_blocks` (`puid`,`worker_id`,`worker_full_name`,`height`,`hash`,`hash_no_nonce`,`nonce`,`prev_hash`,`network_diff`,`created_at`) VALUES({},{},'0x{}',{},'0x{}','0x{}','0x{:016x}','0x{}',{},'{}')",
         user_id,
         worker_id,
         worker_name,
@@ -182,7 +182,7 @@ fn create_block_record(
 //         Err(e) => format!("`rpc_error` = `{}`", e),
 //     };
 //     let stmt = format!(
-//         "UPDATE found_blocks SET {} WHERE `hash` = '0x{}'",
+//         "UPDATE s_vpool_found_blocks SET {} WHERE `hash` = '0x{}'",
 //         &update, &block_hash,
 //     );
 //     execute_query(url, stmt);

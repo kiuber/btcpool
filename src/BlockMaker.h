@@ -65,7 +65,7 @@ protected:
 
   KafkaSimpleConsumer kafkaConsumerSolvedShare_;
 
-  MysqlConnectInfo poolDB_; // save blocks to table.found_blocks
+  MysqlConnectInfo poolDB_; // save blocks to table.s_vpool_found_blocks
 
   void runThreadConsumeSolvedShare();
   void consumeSolvedShare(rd_kafka_message_t *rkmessage);

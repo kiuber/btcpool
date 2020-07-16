@@ -5,8 +5,8 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP TABLE IF EXISTS `stats_pool_day`;
-CREATE TABLE `stats_pool_day` (
+DROP TABLE IF EXISTS `s_vpool_stats_pool_day`;
+CREATE TABLE `s_vpool_stats_pool_day` (
   `day` int(11) NOT NULL,
   `share_accept` bigint(20) NOT NULL DEFAULT '0',
   `share_stale` bigint(20) NOT NULL DEFAULT '0',
@@ -22,8 +22,8 @@ CREATE TABLE `stats_pool_day` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `stats_pool_hour`;
-CREATE TABLE `stats_pool_hour` (
+DROP TABLE IF EXISTS `s_vpool_stats_pool_hour`;
+CREATE TABLE `s_vpool_stats_pool_hour` (
   `hour` int(11) NOT NULL,
   `share_accept` bigint(20) NOT NULL DEFAULT '0',
   `share_stale` bigint(20) NOT NULL DEFAULT '0',
@@ -38,8 +38,8 @@ CREATE TABLE `stats_pool_hour` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `stats_users_day`;
-CREATE TABLE `stats_users_day` (
+DROP TABLE IF EXISTS `s_vpool_stats_users_day`;
+CREATE TABLE `s_vpool_stats_users_day` (
   `puid` int(11) NOT NULL,
   `day` int(11) NOT NULL,
   `share_accept` bigint(20) NOT NULL DEFAULT '0',
@@ -55,8 +55,8 @@ CREATE TABLE `stats_users_day` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `stats_users_hour`;
-CREATE TABLE `stats_users_hour` (
+DROP TABLE IF EXISTS `s_vpool_stats_users_hour`;
+CREATE TABLE `s_vpool_stats_users_hour` (
   `puid` int(11) NOT NULL,
   `hour` int(11) NOT NULL,
   `share_accept` bigint(20) NOT NULL DEFAULT '0',

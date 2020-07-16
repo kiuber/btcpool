@@ -62,7 +62,7 @@ private:
   std::queue<string> jobCacheQueue_;
   std::unordered_map<string, JobCache> jobCacheMap_;
 
-  MysqlConnectInfo poolDB_; // save blocks to table `found_blocks`
+  MysqlConnectInfo poolDB_; // save blocks to table `s_vpool_found_blocks`
 };
 
 class PoolWatchClientGrin : public PoolWatchClient {
