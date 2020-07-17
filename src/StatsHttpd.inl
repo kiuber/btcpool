@@ -907,7 +907,7 @@ void StatsServerT<SHARE>::_flushWorkersAndUsersToDBThread() {
       `s_vpool_mining_workers`.`reject_15m` = `s_vpool_mining_workers_tmp`.`reject_15m`,
       `s_vpool_mining_workers`.`reject_detail_15m` = `s_vpool_mining_workers_tmp`.`reject_detail_15m`,
       `s_vpool_mining_workers`.`accept_1h` = `s_vpool_mining_workers_tmp`.`accept_1h`,
-      `s_vpool_mining_workers`.`stale_1h` = `s_vpool_s_vpool_mining_workers_tmp`.`stale_1h`,
+      `s_vpool_mining_workers`.`stale_1h` = `s_vpool_mining_workers_tmp`.`stale_1h`,
       `s_vpool_mining_workers`.`reject_1h` = `s_vpool_mining_workers_tmp`.`reject_1h`,
       `s_vpool_mining_workers`.`reject_detail_1h` = `s_vpool_mining_workers_tmp`.`reject_detail_1h`,
       `s_vpool_mining_workers`.`accept_count` = `s_vpool_mining_workers_tmp`.`accept_count`,
