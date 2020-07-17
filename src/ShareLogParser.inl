@@ -471,7 +471,7 @@ void ShareLogParserT<SHARE>::generateHoursData(
   // worker
   if (userId != 0 && workerId != 0) {
     extraValues = Strings::Format("%d,%d,", workerId, userId);
-    table = "stats_workers_hour";
+    table = "s_vpool_stats_workers_hour";
   }
   // user
   else if (userId != 0 && workerId == 0) {
@@ -526,7 +526,7 @@ void ShareLogParserT<SHARE>::generateHoursData(
           nowStr);
     } // for scope lock
 
-    if (table == "stats_workers_hour") {
+    if (table == "s_vpool_stats_workers_hour") {
       valuesWorkersHour->push_back(valuesStr);
     } else if (table == "s_vpool_stats_users_hour") {
       valuesUsersHour->push_back(valuesStr);
@@ -605,7 +605,7 @@ void ShareLogParserT<SHARE>::flushHourOrDailyData(
       tableName,
       tmpTableName);
   if (!poolDB_.update(mergeSQL)) {
-    LOG(ERROR) << "merge mining_workers failure";
+    LOG(ERROR) << "merge s_vpool_mining_workers failure";
     return;
   }
 
@@ -627,7 +627,7 @@ void ShareLogParserT<SHARE>::generateDailyData(
   // worker
   if (userId != 0 && workerId != 0) {
     extraValues = Strings::Format("%d,%d,", workerId, userId);
-    table = "stats_workers_day";
+    table = "s_vpool_stats_workers_day";
   }
   // user
   else if (userId != 0 && workerId == 0) {
@@ -673,7 +673,7 @@ void ShareLogParserT<SHARE>::generateDailyData(
         nowStr);
   } // for scope lock
 
-  if (table == "stats_workers_day") {
+  if (table == "s_vpool_stats_workers_day") {
     valuesWorkersDay->push_back(valuesStr);
   } else if (table == "s_vpool_stats_users_day") {
     valuesUsersDay->push_back(valuesStr);
@@ -709,14 +709,14 @@ void ShareLogParserT<SHARE>::removeExpiredDataFromDB() {
   lastRemoveTime = time(nullptr);
 
   //
-  // table.stats_workers_day
+  // table.s_vpool_stats_workers_day
   //
   {
     const int32_t kDailyDataKeepDays_workers = 90; // 3 months
     const string dayStr =
         date("%Y%m%d", time(nullptr) - 86400 * kDailyDataKeepDays_workers);
     sql = Strings::Format(
-        "DELETE FROM `stats_workers_day` WHERE `day` < '%s'", dayStr);
+        "DELETE FROM `s_vpool_stats_workers_day` WHERE `day` < '%s'", dayStr);
     if (poolDB_.execute(sql)) {
       LOG(INFO) << "delete expired workers daily data before '" << dayStr
                 << "', count: " << poolDB_.affectedRows();
@@ -724,14 +724,14 @@ void ShareLogParserT<SHARE>::removeExpiredDataFromDB() {
   }
 
   //
-  // table.stats_workers_hour
+  // table.s_vpool_stats_workers_hour
   //
   {
     const int32_t kHourDataKeepDays_workers = 24 * 3; // 3 days
     const string hourStr =
         date("%Y%m%d%H", time(nullptr) - 3600 * kHourDataKeepDays_workers);
     sql = Strings::Format(
-        "DELETE FROM `stats_workers_hour` WHERE `hour` < '%s'", hourStr);
+        "DELETE FROM `s_vpool_stats_workers_hour` WHERE `hour` < '%s'", hourStr);
     if (poolDB_.execute(sql)) {
       LOG(INFO) << "delete expired workers hour data before '" << hourStr
                 << "', count: " << poolDB_.affectedRows();
@@ -819,7 +819,7 @@ bool ShareLogParserT<SHARE>::flushToDB(bool removeExpiredData) {
 
   // flush hours data
   flushHourOrDailyData(
-      valuesWorkersHour, "stats_workers_hour", "`worker_id`,`puid`,`hour`,");
+      valuesWorkersHour, "s_vpool_stats_workers_hour", "`worker_id`,`puid`,`hour`,");
   flushHourOrDailyData(valuesUsersHour, "s_vpool_stats_users_hour", "`puid`,`hour`,");
   flushHourOrDailyData(valuesPoolHour, "s_vpool_stats_pool_hour", "`hour`,");
   counter +=
@@ -827,7 +827,7 @@ bool ShareLogParserT<SHARE>::flushToDB(bool removeExpiredData) {
 
   // flush daily data
   flushHourOrDailyData(
-      valuesWorkersDay, "stats_workers_day", "`worker_id`,`puid`,`day`,");
+      valuesWorkersDay, "s_vpool_stats_workers_day", "`worker_id`,`puid`,`day`,");
   flushHourOrDailyData(valuesUsersDay, "s_vpool_stats_users_day", "`puid`,`day`,");
   flushHourOrDailyData(valuesPoolDay, "s_vpool_stats_pool_day", "`day`,");
   counter +=

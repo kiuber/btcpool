@@ -77,8 +77,8 @@ CREATE TABLE `s_vpool_stats_users_hour` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `stats_workers_day`;
-CREATE TABLE `stats_workers_day` (
+DROP TABLE IF EXISTS `s_vpool_stats_workers_day`;
+CREATE TABLE `s_vpool_stats_workers_day` (
   `puid` int(11) NOT NULL,
   `worker_id` bigint(20) NOT NULL,
   `day` int(11) NOT NULL,
@@ -96,8 +96,8 @@ CREATE TABLE `stats_workers_day` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `stats_workers_hour`;
-CREATE TABLE `stats_workers_hour` (
+DROP TABLE IF EXISTS `s_vpool_stats_workers_hour`;
+CREATE TABLE `s_vpool_stats_workers_hour` (
   `puid` int(11) NOT NULL,
   `worker_id` bigint(20) NOT NULL,
   `hour` int(11) NOT NULL,

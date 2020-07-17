@@ -45,11 +45,11 @@ ALTER TABLE `s_vpool_stats_users_hour`
 add `share_stale` BIGINT default 0 NOT NULL after `share_accept`,
 add `reject_detail` varchar(255) default '' NOT NULL after `share_reject`;
 
-ALTER TABLE `stats_workers_day`
+ALTER TABLE `s_vpool_stats_workers_day`
 add `share_stale` BIGINT default 0 NOT NULL after `share_accept`,
 add `reject_detail` varchar(255) default '' NOT NULL after `share_reject`;
 
-ALTER TABLE `stats_workers_hour`
+ALTER TABLE `s_vpool_stats_workers_hour`
 add `share_stale` BIGINT default 0 NOT NULL after `share_accept`,
 add `reject_detail` varchar(255) default '' NOT NULL after `share_reject`;
 
