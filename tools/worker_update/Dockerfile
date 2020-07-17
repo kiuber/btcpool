@@ -11,6 +11,7 @@ LABEL maintainer="Yihao Peng <yihao.peng@bitmain.com>"
 
 ARG APT_MIRROR_URL
 ARG BUILD_JOBS=1
+ARG BUILD_TYPE=Debug
 
 COPY docker/btcpool/deploy/update_apt_sources.sh /tmp/
 RUN /tmp/update_apt_sources.sh
@@ -49,7 +50,7 @@ RUN cd /tmp && wget https://github.com/edenhill/librdkafka/archive/v1.1.0.tar.gz
 COPY . /work/btcpool
 
 RUN mkdir /work/build && cd /work/build && \
-    cmake -DPOOL__GENERATE_DEB_PACKAGE=ON /work/btcpool/tools/worker_update && \
+    cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DPOOL__GENERATE_DEB_PACKAGE=ON /work/btcpool/tools/worker_update && \
     make package -j$BUILD_JOBS
 
 ######### Release image #########
