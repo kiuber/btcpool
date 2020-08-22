@@ -58,22 +58,13 @@ endif()
 #
 # Chain Type
 #
-set(SUPPORTED_CHAIN_TYPES "BTC|BCH|BSV|UBTC|LTC|ZEC|BTCVAULT|ETH")
+set(SUPPORTED_CHAIN_TYPES "BTC|BCH|BSV|UBTC|LTC|ZEC|BTCVAULT")
 if(NOT CHAIN_TYPE)
   message(FATAL_ERROR "Chain type not defined! (-DCHAIN_TYPE=${SUPPORTED_CHAIN_TYPES})")
 endif()
 
 # Bitcoin
 if (CHAIN_TYPE STREQUAL "BTC")
-  set(CHAIN_NAME "Bitcoin Core")
-  set(POOL__DEB_PACKNAME_POSTFIX "${POOL__DEB_PACKNAME_POSTFIX}-bitcoin")
-  set(POOL__DEFAULT_INSTALL_PREFIX "/work/btcpool.btc")
-
-  if (HAVE_KEY_IO_H)
-    add_definitions(-DINCLUDE_BTC_KEY_IO_H)
-  endif()
-
-elseif (CHAIN_TYPE STREQUAL "ETH")
   set(CHAIN_NAME "Bitcoin Core")
   set(POOL__DEB_PACKNAME_POSTFIX "${POOL__DEB_PACKNAME_POSTFIX}-bitcoin")
   set(POOL__DEFAULT_INSTALL_PREFIX "/work/btcpool.btc")
