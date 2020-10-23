@@ -47,7 +47,7 @@ kafka = {
 };
 
 #
-# pool mysql db: table.s_vpool_found_blocks
+# pool mysql db: table.s_epool_found_blocks
 #
 pooldb = {
   host = "localhost";
@@ -161,7 +161,7 @@ statshttpd = {
 
 
 #
-# pool mysql db: table.s_vpool_mining_workers
+# pool mysql db: table.s_epool_mining_workers
 #
 pooldb = {
   host = "localhost";

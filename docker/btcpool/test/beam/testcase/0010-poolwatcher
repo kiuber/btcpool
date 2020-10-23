@@ -52,14 +52,14 @@ kill $SUBMIT_PID || {
     exit 1
 }
 
-echo "dumping s_vpool_found_blocks..."
+echo "dumping s_epool_found_blocks..."
 $MYSQL_CLIENT <<EOF | tee "$TEST_RESULT"
-select hash from s_vpool_found_blocks;
+select hash from s_epool_found_blocks;
 quit
 EOF
 
-echo "comparing s_vpool_found_blocks..."
-diff "$TEST_RESULT" "./testdata/s_vpool_found_blocks_hash-1.txt" || {
+echo "comparing s_epool_found_blocks..."
+diff "$TEST_RESULT" "./testdata/s_epool_found_blocks_hash-1.txt" || {
     echo "Block hash does not match!"
     exit 1
 }

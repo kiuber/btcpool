@@ -9,8 +9,8 @@ DROP DATABASE IF EXISTS `bpool_local_db_eth`;
 CREATE DATABASE `bpool_local_db_eth`;
 USE `bpool_local_db_eth`;
 
-DROP TABLE IF EXISTS `s_vpool_found_blocks`;
-CREATE TABLE `s_vpool_found_blocks` (
+DROP TABLE IF EXISTS `s_epool_found_blocks`;
+CREATE TABLE `s_epool_found_blocks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `puid` int(11) NOT NULL,
   `worker_id` bigint(20) NOT NULL,
@@ -34,8 +34,8 @@ CREATE TABLE `s_vpool_found_blocks` (
   UNIQUE KEY `unique_block`(`hash_no_nonce`,`nonce`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `s_vpool_mining_workers`;
-CREATE TABLE `s_vpool_mining_workers` (
+DROP TABLE IF EXISTS `s_epool_mining_workers`;
+CREATE TABLE `s_epool_mining_workers` (
   `worker_id` bigint(20) NOT NULL,
   `puid` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,

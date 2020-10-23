@@ -822,7 +822,7 @@ void BlockMakerBitcoin::_saveBlockToDBThread(
   }
 
   sql = Strings::Format(
-      "INSERT INTO `s_vpool_found_blocks%s` "
+      "INSERT INTO `s_epool_found_blocks%s` "
       " (`puid`, `worker_id`, `worker_full_name`, `job_id`"
       "  ,`height`, `hash`, `rewards`, `size`, `prev_hash`"
       "  ,`bits`, `version`, `created_at`)"

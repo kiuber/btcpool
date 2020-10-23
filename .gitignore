@@ -3,6 +3,7 @@
 .vscode/
 .idea/
 .DS_Store
+bctpool-eth.code-workspace
 
 # Building files
 build

@@ -9,8 +9,8 @@ DROP DATABASE IF EXISTS `bpool_local_stats_db`;
 CREATE DATABASE `bpool_local_stats_db`;
 USE `bpool_local_stats_db`;
 
-DROP TABLE IF EXISTS `s_vpool_stats_pool_day`;
-CREATE TABLE `s_vpool_stats_pool_day` (
+DROP TABLE IF EXISTS `s_epool_stats_pool_day`;
+CREATE TABLE `s_epool_stats_pool_day` (
   `day` int(11) NOT NULL,
   `share_accept` bigint(20) NOT NULL DEFAULT '0',
   `share_stale` bigint(20) NOT NULL DEFAULT '0',
@@ -26,8 +26,8 @@ CREATE TABLE `s_vpool_stats_pool_day` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `s_vpool_stats_pool_hour`;
-CREATE TABLE `s_vpool_stats_pool_hour` (
+DROP TABLE IF EXISTS `s_epool_stats_pool_hour`;
+CREATE TABLE `s_epool_stats_pool_hour` (
   `hour` int(11) NOT NULL,
   `share_accept` bigint(20) NOT NULL DEFAULT '0',
   `share_stale` bigint(20) NOT NULL DEFAULT '0',
@@ -42,8 +42,8 @@ CREATE TABLE `s_vpool_stats_pool_hour` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `s_vpool_stats_users_day`;
-CREATE TABLE `s_vpool_stats_users_day` (
+DROP TABLE IF EXISTS `s_epool_stats_users_day`;
+CREATE TABLE `s_epool_stats_users_day` (
   `puid` int(11) NOT NULL,
   `day` int(11) NOT NULL,
   `share_accept` bigint(20) NOT NULL DEFAULT '0',
@@ -59,8 +59,8 @@ CREATE TABLE `s_vpool_stats_users_day` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `s_vpool_stats_users_hour`;
-CREATE TABLE `s_vpool_stats_users_hour` (
+DROP TABLE IF EXISTS `s_epool_stats_users_hour`;
+CREATE TABLE `s_epool_stats_users_hour` (
   `puid` int(11) NOT NULL,
   `hour` int(11) NOT NULL,
   `share_accept` bigint(20) NOT NULL DEFAULT '0',
@@ -77,8 +77,8 @@ CREATE TABLE `s_vpool_stats_users_hour` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `s_vpool_stats_workers_day`;
-CREATE TABLE `s_vpool_stats_workers_day` (
+DROP TABLE IF EXISTS `s_epool_stats_workers_day`;
+CREATE TABLE `s_epool_stats_workers_day` (
   `puid` int(11) NOT NULL,
   `worker_id` bigint(20) NOT NULL,
   `day` int(11) NOT NULL,
@@ -96,8 +96,8 @@ CREATE TABLE `s_vpool_stats_workers_day` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `s_vpool_stats_workers_hour`;
-CREATE TABLE `s_vpool_stats_workers_hour` (
+DROP TABLE IF EXISTS `s_epool_stats_workers_hour`;
+CREATE TABLE `s_epool_stats_workers_hour` (
   `puid` int(11) NOT NULL,
   `worker_id` bigint(20) NOT NULL,
   `hour` int(11) NOT NULL,

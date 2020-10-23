@@ -64,7 +64,7 @@ users = {
 
 <?php if ($statshttpd_use_mysql): ?>
 #
-# pool mysql db, table: s_vpool_mining_workers
+# pool mysql db, table: s_epool_mining_workers
 #
 pooldb = {
   host = "<?=notNullTrim('pooldb_host')?>";

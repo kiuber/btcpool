@@ -40,7 +40,7 @@ protected:
     size_t clientId_;
   };
 
-  MySQLExecQueue poolDB_; // save blocks to table `s_vpool_found_blocks`
+  MySQLExecQueue poolDB_; // save blocks to table `s_epool_found_blocks`
 
   KafkaSimpleConsumer kafkaSolvedShareConsumer_; // consume solved_share_topic
   thread threadSolvedShareConsume_;

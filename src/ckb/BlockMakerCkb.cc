@@ -74,7 +74,7 @@ void BlockMakerCkb::processSolvedShare(rd_kafka_message_t *rkmessage) {
 
   const string nowStr = date("%F %T");
   string sql = Strings::Format(
-      "INSERT INTO `s_vpool_found_blocks` "
+      "INSERT INTO `s_epool_found_blocks` "
       " (`puid`, `worker_id`, `worker_full_name`, `job_id`"
       "  ,`height`, `hash`"
       //"  ,`bits`, `rewards`, `created_at`)"
