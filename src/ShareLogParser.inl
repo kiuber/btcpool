@@ -471,16 +471,16 @@ void ShareLogParserT<SHARE>::generateHoursData(
   // worker
   if (userId != 0 && workerId != 0) {
     extraValues = Strings::Format("%d,%d,", workerId, userId);
-    table = "s_epool_stats_workers_hour";
+    table = "s_epool_eth_stats_workers_hour";
   }
   // user
   else if (userId != 0 && workerId == 0) {
     extraValues = Strings::Format("%d,", userId);
-    table = "s_epool_stats_users_hour";
+    table = "s_epool_eth_stats_users_hour";
   }
   // pool
   else if (userId == 0 && workerId == 0) {
-    table = "s_epool_stats_pool_hour";
+    table = "s_epool_eth_stats_pool_hour";
   } else {
     LOG(ERROR) << "unknown stats type";
     return;
@@ -526,11 +526,11 @@ void ShareLogParserT<SHARE>::generateHoursData(
           nowStr);
     } // for scope lock
 
-    if (table == "s_epool_stats_workers_hour") {
+    if (table == "s_epool_eth_stats_workers_hour") {
       valuesWorkersHour->push_back(valuesStr);
-    } else if (table == "s_epool_stats_users_hour") {
+    } else if (table == "s_epool_eth_stats_users_hour") {
       valuesUsersHour->push_back(valuesStr);
-    } else if (table == "s_epool_stats_pool_hour") {
+    } else if (table == "s_epool_eth_stats_pool_hour") {
       valuesPoolHour->push_back(valuesStr);
     }
   } /* /for */
@@ -605,7 +605,7 @@ void ShareLogParserT<SHARE>::flushHourOrDailyData(
       tableName,
       tmpTableName);
   if (!poolDB_.update(mergeSQL)) {
-    LOG(ERROR) << "merge s_epool_mining_workers failure";
+    LOG(ERROR) << "merge s_epool_eth_mining_workers failure";
     return;
   }
 
@@ -627,16 +627,16 @@ void ShareLogParserT<SHARE>::generateDailyData(
   // worker
   if (userId != 0 && workerId != 0) {
     extraValues = Strings::Format("%d,%d,", workerId, userId);
-    table = "s_epool_stats_workers_day";
+    table = "s_epool_eth_stats_workers_day";
   }
   // user
   else if (userId != 0 && workerId == 0) {
     extraValues = Strings::Format("%d,", userId);
-    table = "s_epool_stats_users_day";
+    table = "s_epool_eth_stats_users_day";
   }
   // pool
   else if (userId == 0 && workerId == 0) {
-    table = "s_epool_stats_pool_day";
+    table = "s_epool_eth_stats_pool_day";
   } else {
     LOG(ERROR) << "unknown stats type";
     return;
@@ -673,11 +673,11 @@ void ShareLogParserT<SHARE>::generateDailyData(
         nowStr);
   } // for scope lock
 
-  if (table == "s_epool_stats_workers_day") {
+  if (table == "s_epool_eth_stats_workers_day") {
     valuesWorkersDay->push_back(valuesStr);
-  } else if (table == "s_epool_stats_users_day") {
+  } else if (table == "s_epool_eth_stats_users_day") {
     valuesUsersDay->push_back(valuesStr);
-  } else if (table == "s_epool_stats_pool_day") {
+  } else if (table == "s_epool_eth_stats_pool_day") {
     valuesPoolDay->push_back(valuesStr);
   }
 }
@@ -709,14 +709,14 @@ void ShareLogParserT<SHARE>::removeExpiredDataFromDB() {
   lastRemoveTime = time(nullptr);
 
   //
-  // table.s_epool_stats_workers_day
+  // table.s_epool_eth_stats_workers_day
   //
   {
     const int32_t kDailyDataKeepDays_workers = 90; // 3 months
     const string dayStr =
         date("%Y%m%d", time(nullptr) - 86400 * kDailyDataKeepDays_workers);
     sql = Strings::Format(
-        "DELETE FROM `s_epool_stats_workers_day` WHERE `day` < '%s'", dayStr);
+        "DELETE FROM `s_epool_eth_stats_workers_day` WHERE `day` < '%s'", dayStr);
     if (poolDB_.execute(sql)) {
       LOG(INFO) << "delete expired workers daily data before '" << dayStr
                 << "', count: " << poolDB_.affectedRows();
@@ -724,14 +724,14 @@ void ShareLogParserT<SHARE>::removeExpiredDataFromDB() {
   }
 
   //
-  // table.s_epool_stats_workers_hour
+  // table.s_epool_eth_stats_workers_hour
   //
   {
     const int32_t kHourDataKeepDays_workers = 24 * 3; // 3 days
     const string hourStr =
         date("%Y%m%d%H", time(nullptr) - 3600 * kHourDataKeepDays_workers);
     sql = Strings::Format(
-        "DELETE FROM `s_epool_stats_workers_hour` WHERE `hour` < '%s'", hourStr);
+        "DELETE FROM `s_epool_eth_stats_workers_hour` WHERE `hour` < '%s'", hourStr);
     if (poolDB_.execute(sql)) {
       LOG(INFO) << "delete expired workers hour data before '" << hourStr
                 << "', count: " << poolDB_.affectedRows();
@@ -739,14 +739,14 @@ void ShareLogParserT<SHARE>::removeExpiredDataFromDB() {
   }
 
   //
-  // table.s_epool_stats_users_hour
+  // table.s_epool_eth_stats_users_hour
   //
   {
     const int32_t kHourDataKeepDays_users = 24 * 30; // 30 days
     const string hourStr =
         date("%Y%m%d%H", time(nullptr) - 3600 * kHourDataKeepDays_users);
     sql = Strings::Format(
-        "DELETE FROM `s_epool_stats_users_hour` WHERE `hour` < '%s'", hourStr);
+        "DELETE FROM `s_epool_eth_stats_users_hour` WHERE `hour` < '%s'", hourStr);
     if (poolDB_.execute(sql)) {
       LOG(INFO) << "delete expired users hour data before '" << hourStr
                 << "', count: " << poolDB_.affectedRows();
@@ -819,17 +819,17 @@ bool ShareLogParserT<SHARE>::flushToDB(bool removeExpiredData) {
 
   // flush hours data
   flushHourOrDailyData(
-      valuesWorkersHour, "s_epool_stats_workers_hour", "`worker_id`,`puid`,`hour`,");
-  flushHourOrDailyData(valuesUsersHour, "s_epool_stats_users_hour", "`puid`,`hour`,");
-  flushHourOrDailyData(valuesPoolHour, "s_epool_stats_pool_hour", "`hour`,");
+      valuesWorkersHour, "s_epool_eth_stats_workers_hour", "`worker_id`,`puid`,`hour`,");
+  flushHourOrDailyData(valuesUsersHour, "s_epool_eth_stats_users_hour", "`puid`,`hour`,");
+  flushHourOrDailyData(valuesPoolHour, "s_epool_eth_stats_pool_hour", "`hour`,");
   counter +=
       valuesWorkersHour.size() + valuesUsersHour.size() + valuesPoolHour.size();
 
   // flush daily data
   flushHourOrDailyData(
-      valuesWorkersDay, "s_epool_stats_workers_day", "`worker_id`,`puid`,`day`,");
-  flushHourOrDailyData(valuesUsersDay, "s_epool_stats_users_day", "`puid`,`day`,");
-  flushHourOrDailyData(valuesPoolDay, "s_epool_stats_pool_day", "`day`,");
+      valuesWorkersDay, "s_epool_eth_stats_workers_day", "`worker_id`,`puid`,`day`,");
+  flushHourOrDailyData(valuesUsersDay, "s_epool_eth_stats_users_day", "`puid`,`day`,");
+  flushHourOrDailyData(valuesPoolDay, "s_epool_eth_stats_pool_day", "`day`,");
   counter +=
       valuesWorkersDay.size() + valuesUsersDay.size() + valuesPoolDay.size();
 

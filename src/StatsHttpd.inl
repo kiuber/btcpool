@@ -898,24 +898,24 @@ void StatsServerT<SHARE>::_flushWorkersAndUsersToDBThread() {
   // table.`mining_workers` unique index: `puid` + `worker_id`
   //
   const string mergeSQL = R"(
-    INSERT INTO `s_epool_mining_workers`
-    SELECT * FROM `s_epool_mining_workers_tmp`
+    INSERT INTO `s_epool_eth_mining_workers`
+    SELECT * FROM `s_epool_eth_mining_workers_tmp`
     ON DUPLICATE KEY UPDATE
-      `s_epool_mining_workers`.`accept_5m` = `s_epool_mining_workers_tmp`.`accept_5m`,
-      `s_epool_mining_workers`.`accept_15m` = `s_epool_mining_workers_tmp`.`accept_15m`,
-      `s_epool_mining_workers`.`stale_15m` = `s_epool_mining_workers_tmp`.`stale_15m`,
-      `s_epool_mining_workers`.`reject_15m` = `s_epool_mining_workers_tmp`.`reject_15m`,
-      `s_epool_mining_workers`.`reject_detail_15m` = `s_epool_mining_workers_tmp`.`reject_detail_15m`,
-      `s_epool_mining_workers`.`accept_1h` = `s_epool_mining_workers_tmp`.`accept_1h`,
-      `s_epool_mining_workers`.`stale_1h` = `s_epool_mining_workers_tmp`.`stale_1h`,
-      `s_epool_mining_workers`.`reject_1h` = `s_epool_mining_workers_tmp`.`reject_1h`,
-      `s_epool_mining_workers`.`reject_detail_1h` = `s_epool_mining_workers_tmp`.`reject_detail_1h`,
-      `s_epool_mining_workers`.`accept_count` = `s_epool_mining_workers_tmp`.`accept_count`,
-      `s_epool_mining_workers`.`last_share_ip` = `s_epool_mining_workers_tmp`.`last_share_ip`,
-      `s_epool_mining_workers`.`last_share_time` = `s_epool_mining_workers_tmp`.`last_share_time`,
-      `s_epool_mining_workers`.`updated_at` = `s_epool_mining_workers_tmp`.`updated_at`
+      `s_epool_eth_mining_workers`.`accept_5m` = `s_epool_eth_mining_workers_tmp`.`accept_5m`,
+      `s_epool_eth_mining_workers`.`accept_15m` = `s_epool_eth_mining_workers_tmp`.`accept_15m`,
+      `s_epool_eth_mining_workers`.`stale_15m` = `s_epool_eth_mining_workers_tmp`.`stale_15m`,
+      `s_epool_eth_mining_workers`.`reject_15m` = `s_epool_eth_mining_workers_tmp`.`reject_15m`,
+      `s_epool_eth_mining_workers`.`reject_detail_15m` = `s_epool_eth_mining_workers_tmp`.`reject_detail_15m`,
+      `s_epool_eth_mining_workers`.`accept_1h` = `s_epool_eth_mining_workers_tmp`.`accept_1h`,
+      `s_epool_eth_mining_workers`.`stale_1h` = `s_epool_eth_mining_workers_tmp`.`stale_1h`,
+      `s_epool_eth_mining_workers`.`reject_1h` = `s_epool_eth_mining_workers_tmp`.`reject_1h`,
+      `s_epool_eth_mining_workers`.`reject_detail_1h` = `s_epool_eth_mining_workers_tmp`.`reject_detail_1h`,
+      `s_epool_eth_mining_workers`.`accept_count` = `s_epool_eth_mining_workers_tmp`.`accept_count`,
+      `s_epool_eth_mining_workers`.`last_share_ip` = `s_epool_eth_mining_workers_tmp`.`last_share_ip`,
+      `s_epool_eth_mining_workers`.`last_share_time` = `s_epool_eth_mining_workers_tmp`.`last_share_time`,
+      `s_epool_eth_mining_workers`.`updated_at` = `s_epool_eth_mining_workers_tmp`.`updated_at`
   )";
-  // fields for table.s_epool_mining_workers
+  // fields for table.s_epool_eth_mining_workers
   const string fields =
       "`worker_id`, `puid`, `group_id`, `accept_5m`, "
       "`accept_15m`, `stale_15m`, `reject_15m`, `reject_detail_15m`, "
@@ -1016,26 +1016,26 @@ void StatsServerT<SHARE>::_flushWorkersAndUsersToDBThread() {
   }
 
   if (!poolDB_->execute(
-          "DROP TEMPORARY TABLE IF EXISTS `s_epool_mining_workers_tmp`;")) {
-    LOG(ERROR) << "DROP TEMPORARY TABLE `s_epool_mining_workers_tmp` failure";
+          "DROP TEMPORARY TABLE IF EXISTS `s_epool_eth_mining_workers_tmp`;")) {
+    LOG(ERROR) << "DROP TEMPORARY TABLE `s_epool_eth_mining_workers_tmp` failure";
     goto finish;
   }
-  if (!poolDB_->execute("CREATE TEMPORARY TABLE `s_epool_mining_workers_tmp` like "
-                        "`s_epool_mining_workers`;")) {
-    LOG(ERROR) << "CREATE TEMPORARY TABLE `s_epool_mining_workers_tmp` failure";
+  if (!poolDB_->execute("CREATE TEMPORARY TABLE `s_epool_eth_mining_workers_tmp` like "
+                        "`s_epool_eth_mining_workers`;")) {
+    LOG(ERROR) << "CREATE TEMPORARY TABLE `s_epool_eth_mining_workers_tmp` failure";
     // something went wrong with the current mysql connection, try to reconnect.
     poolDB_->reconnect();
     goto finish;
   }
 
-  if (!multiInsert(*poolDB_, "s_epool_mining_workers_tmp", fields, values)) {
-    LOG(ERROR) << "mul-insert table.s_epool_mining_workers_tmp failure";
+  if (!multiInsert(*poolDB_, "s_epool_eth_mining_workers_tmp", fields, values)) {
+    LOG(ERROR) << "mul-insert table.s_epool_eth_mining_workers_tmp failure";
     goto finish;
   }
 
   // merge items
   if (!poolDB_->update(mergeSQL)) {
-    LOG(ERROR) << "merge s_epool_mining_workers failure";
+    LOG(ERROR) << "merge s_epool_eth_mining_workers failure";
     goto finish;
   }
   LOG(INFO) << "flush to DB... done, workers: " << workerCounter
@@ -1353,7 +1353,7 @@ void StatsServerT<SHARE>::runThreadConsume() {
     }
 
     //
-    // flush workers to table.s_epool_mining_workers
+    // flush workers to table.s_epool_eth_mining_workers
     //
     if (lastFlushDBTime + kFlushDBInterval_ < time(nullptr)) {
       // will use thread to flush data to DB.
@@ -1604,7 +1604,7 @@ bool StatsServerT<SHARE>::updateWorkerStatusToDB(
 
   // find the miner
   sql = Strings::Format(
-      "SELECT `group_id` FROM `s_epool_mining_workers` "
+      "SELECT `group_id` FROM `s_epool_eth_mining_workers` "
       " WHERE `puid`=%d AND `worker_id`=%d",
       userId,
       workerId);
@@ -1616,7 +1616,7 @@ bool StatsServerT<SHARE>::updateWorkerStatusToDB(
     // group Id == 0: means the miner's status is 'deleted'
     // we need to move from 'deleted' group to 'default' group.
     sql = Strings::Format(
-        "UPDATE `s_epool_mining_workers` SET `group_id`=%d, "
+        "UPDATE `s_epool_eth_mining_workers` SET `group_id`=%d, "
         " `worker_name`=\"%s\", `miner_agent`=\"%s\", "
         " `updated_at`=\"%s\" "
         " WHERE `puid`=%d AND `worker_id`=%d",
@@ -1628,10 +1628,10 @@ bool StatsServerT<SHARE>::updateWorkerStatusToDB(
         workerId);
   } else {
     // we have to use 'ON DUPLICATE KEY UPDATE', because 'statshttpd' may insert
-    // items to table.s_epool_mining_workers between we 'select' and 'insert' gap.
+    // items to table.s_epool_eth_mining_workers between we 'select' and 'insert' gap.
     // 'statshttpd' will always set an empty 'worker_name'.
     sql = Strings::Format(
-        "INSERT INTO `s_epool_mining_workers`(`puid`,`worker_id`,"
+        "INSERT INTO `s_epool_eth_mining_workers`(`puid`,`worker_id`,"
         " `group_id`,`worker_name`,`miner_agent`,"
         " `created_at`,`updated_at`) "
         " VALUES(%d,%d"

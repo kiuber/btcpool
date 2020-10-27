@@ -262,7 +262,7 @@ protected:
         const string nowStr = date("%F %T", now);
 
         const string sqlBegin =
-            "INSERT INTO `s_epool_mining_workers`(`puid`,`worker_id`,"
+            "INSERT INTO `s_epool_eth_mining_workers`(`puid`,`worker_id`,"
             " `group_id`,`worker_name`,`miner_agent`,"
             " `created_at`,`updated_at`) VALUES";
         const string sqlEnd =
@@ -308,7 +308,7 @@ protected:
         }
 
         if (now - lastFixGroupIdTime_ > FIX_GROUPID_INTERVAL) {
-            sql_ = "UPDATE `s_epool_mining_workers` SET `group_id`=-`puid`"
+            sql_ = "UPDATE `s_epool_eth_mining_workers` SET `group_id`=-`puid`"
                 " WHERE `group_id`=0 AND `last_share_time` > CURRENT_TIMESTAMP()-900";
 
             if (mysqlConn_->execute(sql_)) {

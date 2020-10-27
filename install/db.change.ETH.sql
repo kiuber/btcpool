@@ -1,9 +1,9 @@
 --
 -- 2018-08-08
--- rename `s_epool_found_blocks.hash` as `s_epool_found_blocks.hash_no_nonce`,
--- then add a new field named `s_epool_found_blocks.hash`.
+-- rename `s_epool_eth_found_blocks.hash` as `s_epool_eth_found_blocks.hash_no_nonce`,
+-- then add a new field named `s_epool_eth_found_blocks.hash`.
 --
-ALTER TABLE `s_epool_found_blocks`
+ALTER TABLE `s_epool_eth_found_blocks`
 DROP INDEX `hash`,
 CHANGE `hash` `hash_no_nonce` char(66) NOT NULL,
 ADD `hash` char(66) DEFAULT '' NOT NULL AFTER `ref_uncles`,
@@ -22,7 +22,7 @@ ADD UNIQUE INDEX `block_hash`(`hash_no_nonce`,`hash`);
 --     add a new unique index (`hash_no_nonce`, `nonce`).
 --     remove the old unique index (`hash_no_nonce`, `hash`).
 --
-ALTER TABLE `s_epool_found_blocks`
+ALTER TABLE `s_epool_eth_found_blocks`
 ADD `nonce` char(18) NOT NULL AFTER `hash_no_nonce`,
 ADD UNIQUE INDEX `unique_block`(`hash_no_nonce`,`nonce`),
 DROP INDEX `hash_no_nonce`,

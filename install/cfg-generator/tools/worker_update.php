@@ -23,7 +23,7 @@ kafka = {
 };
 
 #
-# pool mysql db, table: s_epool_mining_workers
+# pool mysql db, table: s_epool_eth_mining_workers
 #
 pooldb = {
   host = "<?=notNullTrim('pooldb_host')?>";

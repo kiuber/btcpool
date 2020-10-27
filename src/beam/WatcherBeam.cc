@@ -188,7 +188,7 @@ void ClientContainerBeam::consumeSolvedShare(rd_kafka_message_t *rkmessage) {
   // save block to DB
   const string nowStr = date("%F %T");
   string sql = Strings::Format(
-      "INSERT INTO `s_epool_found_blocks`("
+      "INSERT INTO `s_epool_eth_found_blocks`("
       "  `puid`, `worker_id`"
       ", `worker_full_name`"
       ", `height`, `hash`"
@@ -241,7 +241,7 @@ void ClientContainerBeam::updateBlockHash(string jobId, string blockHash) {
   // update block hash
   const string nowStr = date("%F %T");
   string sql = Strings::Format(
-      "UPDATE `s_epool_found_blocks` SET `hash`='%s', `created_at`='%s' WHERE "
+      "UPDATE `s_epool_eth_found_blocks` SET `hash`='%s', `created_at`='%s' WHERE "
       "`hash`='%s'",
       blockHash,
       nowStr,
